@@ -1,0 +1,5 @@
+<app-photo-upload 
+    (uploadCompleted)="onUploadCompleted($event)" 
+    (targetsUpdated)="onTargetsUpdated($event)"
+></app-photo-upload>
+<app-similar-photos [isUploadCompleted]="isUploadCompleted" [targets]="targets"></app-similar-photos>

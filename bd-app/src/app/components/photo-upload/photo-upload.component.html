@@ -1,0 +1,71 @@
+<div class="container flex-column">
+  <div class="container flex-column">
+    <mat-form-field appearance="fill">
+      <mat-label>Vartotojo, kurį norite palyginti, slapyvardis</mat-label>
+      <div class="mat-input-container">
+        <input matInput [(ngModel)]="target" placeholder="Vartotojo, kurį norite palyginti, slapyvardis" [disabled]="uploadComplete"/>
+      </div>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" (click)="checkUser()" [disabled]="!target || isCheckLoading || uploadComplete">
+      Pridėti vartotoją
+    </button>
+
+    <div class="loading-indicator" *ngIf="isCheckLoading">
+      <mat-spinner diameter="24"></mat-spinner>
+    </div>
+
+    <p class="success-message" *ngIf="checkSuccess && !isCheckLoading">Vartotojas sėkmingai pridėtas!</p>
+    <p class="error-message" *ngIf="checkError && !isCheckLoading">Vartotojas neegzistuoja. Pasitikrinkite vartotojo vardą.</p>
+
+    <div class="target-list" *ngIf="targets.length > 0">
+      <h2>Vartotojai palyginimui</h2>
+      <div *ngFor="let targetItem of targets; let i = index" class="target-item">
+        <p class="target-text">{{ targetItem }}</p>
+        <button mat-icon-button class="delete-button" (click)="deleteTarget(i)" [disabled]="uploadComplete">
+          <mat-icon>person_remove</mat-icon>
+        </button>
+      </div>
+    </div>
+
+  </div>
+    
+  <button mat-raised-button color="accent" (click)="uploadUsers()" [disabled]="!username || !password || targets.length < 2 || isLoading || uploadComplete">Palyginti vartotojus</button>
+
+  <div class="loading-indicator" *ngIf="isLoading">
+    <mat-spinner diameter="24"></mat-spinner>
+  </div>
+
+  <p class="success-message" *ngIf="uploadSuccess && !isLoading">Vartotojo nuotraukos sėkmingai įkeltos!</p>
+  <p class="error-message" *ngIf="uploadError && !isLoading">Įvyko klaida įkeliant vartotojo nuotraukas. Pabandykite dar kartą.</p>
+
+
+  <div *ngIf="uploadSuccess && !isLoading">
+    <div *ngFor="let data of userData">
+      <h3><i>{{ data.username }}</i> nuotraukos:</h3>
+      <div class="user-photos">
+        <img *ngFor="let photo of data.photos" [src]="'data:image/jpeg;base64,' + photo.photoData" alt="User photo" />
+      </div>
+      <h2>Objektai ir jų dažniai nuotraukose</h2>
+      <div class="similar-users-container">
+        <div class="similar-objects">
+          <div class="object-container" *ngFor="let key of objectKeys(data.frequencies)">
+            <p class="objects">
+              {{ key }}: {{ data.frequencies[key] }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <h2>Objektai ir jų reliatyvūs dydžiai nuotraukose</h2>
+      <div class="similar-users-container">
+        <div class="similar-objects">
+          <div class="object-container" *ngFor="let key of objectKeys(data.sizes)">
+            <p class="objects">
+              {{ key }}: {{ data.sizes[key] }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

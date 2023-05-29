@@ -1,0 +1,40 @@
+<div class="similar-users-table-container" *ngIf="isUploadCompleted">
+  <h2>Panašumo dydžių matrica pagal objektų dažnius nuotraukose</h2>
+  <table class="mat-elevation-z8">
+    <thead>
+      <tr>
+        <th></th>
+        <th *ngFor="let target of targets">{{target}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let target of targets">
+        <td>{{target}}</td>
+        <td *ngFor="let otherTarget of targets">
+          {{ similarityFrequencyMatrix[target][otherTarget] == "-" ? '-' : (similarityFrequencyMatrix[target][otherTarget] * 100).toFixed(2) + "%" }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Panašumo dydžių matrica pagal objektų santykinius dydžius nuotraukose</h2>
+  <table class="mat-elevation-z8">
+    <thead>
+      <tr>
+        <th></th>
+        <th *ngFor="let target of targets">{{target}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let target of targets">
+        <td>{{target}}</td>
+        <td *ngFor="let otherTarget of targets">
+          {{ similarityRelativeSizeMatrix[target][otherTarget] == "-" ? '-' : (similarityRelativeSizeMatrix[target][otherTarget] * 100).toFixed(2) + "%" }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <canvas id="myChart" style="width: 100%; height: 400px;"></canvas>
+
+</div>
