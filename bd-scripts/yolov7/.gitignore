@@ -56,6 +56,7 @@ val2017.zip
 *.weights
 *.pt
 !yolov7.pt
+traced_model.pt
 *.pb
 *.onnx
 *.engine
